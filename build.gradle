@@ -1,0 +1,74 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.1.3.RELEASE"
+        classpath "io.freefair.gradle:android-gradle-plugins:3.3.1"
+
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+//plugins {
+//    id "io.freefair.android-lombok" version "3.3.1"
+//}
+
+//plugins {
+//    id 'jacoco'
+//}
+//jacoco {
+//    toolVersion = "0.8.3"
+//    reportsDir = file("$buildDir/customJacocoReportDir")
+//}
+
+apply plugin: "org.springframework.boot"
+apply plugin: "io.freefair.android-lombok"
+
+
+//TODO
+//apply plugin: 'checkstyle'
+//checkstyle {
+//    toolVersion '7.8.1'
+//    configFile file("CSE1105.checkstyle.xml")
+//}
+//checkstyleMain {
+//    source ='src/main/java'
+//}
+//checkstyleTest {
+//    source ='src/test/java'
+//}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+//TODO
+//jacocoTestReport {
+//    reports {
+//        xml.enabled false
+//        csv.enabled false
+//        html.destination file("${buildDir}/jacocoHtml")
+//    }
+//}
+
+//TODO Any other dependencies or libraries to be added
