@@ -21,6 +21,16 @@ buildscript {
     }
 }
 
+configurations.all {
+    all*.exclude (group: 'commons-logging', module: 'commons-logging')
+    all*.exclude (group: 'commons-logging', module: 'commons-logging')
+    all*.exclude (group: 'org.springframework.boot', module:'commons-logging')
+}
+configurations {
+    providedRuntime
+    compile.exclude (group: 'commons-logging', module: 'commons-logging')
+}
+
 //plugins {
 //    id "io.freefair.android-lombok" version "3.3.1"
 //}
