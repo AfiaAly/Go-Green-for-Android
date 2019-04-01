@@ -1,9 +1,11 @@
 package models;
 
+import java.io.Serializable;
+
 //@NoArgsConstructor
 //@AllArgsConstructor
 //@ToString
-public class User {
+public class User implements Serializable {
     /*@Getter @Setter*/ private String username;
     /*@Getter @Setter*/ private String password;
     /*@Getter @Setter*/ private boolean success;
