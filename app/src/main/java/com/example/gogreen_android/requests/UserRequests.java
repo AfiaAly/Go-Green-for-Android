@@ -81,7 +81,7 @@ public class UserRequests {
             objOut.close();
         } catch (IOException e){
             e.printStackTrace();
-//            MainActivity.connectionError(); //TODO change loginMessage in MainActivity to show error
+//            MainActivity.connectionError();
         }
         return user;
     }

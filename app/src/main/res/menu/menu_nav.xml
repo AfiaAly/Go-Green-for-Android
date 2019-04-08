@@ -15,14 +15,8 @@
             android:title="@string/my_basecase" />
     </group>
 
-    <item android:title="Support">
+    <item>
         <menu>
-            <item
-                android:id="@+id/nav_help"
-                android:title="@string/help" />
-            <item
-                android:id="@+id/nav_settings"
-                android:title="@string/settings" />
             <item
                 android:id="@+id/nav_logout"
                 android:title="@string/log_out" />
