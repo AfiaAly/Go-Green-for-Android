@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
             } else if (!user.isSuccess()) {
                 messageLogin.setVisibility(View.VISIBLE);
-                messageLogin.setText("Login Failed");
+                messageLogin.setText("user is not success");
                 messageLogin.setTextColor(Color.RED);
                 return;
 
@@ -156,11 +156,69 @@ public class MainActivity extends AppCompatActivity {
 
     public void login(String username, String password) throws IOException {
 
+//        messageLogin = (TextView) findViewById(R.id.messageLogin);
+//        messageLogin.setText("");
+////        String username = nameLogin.getText();
+////        String password = pwLogin.getText();
+////        StatisticsController.setUserName(username); //(not sure if needed?)
+//        if (password.equals("") || username.equals("")) {
+//            messageLogin.setVisibility(View.VISIBLE);
+//            messageLogin.setText("Fields cannot be empty");
+//            messageLogin.setTextColor(Color.RED);
+//            return;
+//        }
         //send authentication to server
         try {
             User user = loginPostRequest(username, password);
+//
+//            //authenticating
+//
+//            if (user.isSuccess()) {
+//                //creating new Parent to change scenes
+//                //Parent root = FXMLLoader.load(getClass().getResource("/Statistics.fxml"));
+//                //change scene
+//                //ClientMain.setScene(root);
+//                messageLogin.setVisibility(View.VISIBLE);
+//                messageLogin.setText("Login Success!");
+//                messageLogin.setTextColor(Color.GREEN);
+//
+//
+//            } else {
+//                messageLogin.setVisibility(View.VISIBLE);
+//                messageLogin.setText("Username or password invalid");
+//                messageLogin.setTextColor(Color.RED);
+//                return;
+//            }
         } catch (IOException e) {
+//            messageLogin.setVisibility(View.VISIBLE);
+//            messageLogin.setText("IO Error occured");
+//            messageLogin.setTextColor(Color.RED);
             System.out.println("IOException caught in login method");;
         }
     }
 }
+
+//
+//package com.example.gogreen_android;
+//
+//import android.os.Bundle;
+//import android.support.v4.app.FragmentTransaction;
+//import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.widget.Toolbar;
+//import android.support.v4.app.Fragment;
+//
+//public class MainActivity extends AppCompatActivity {
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main_trial);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//
+//        Fragment fragment = new InboxFragment();
+//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//        ft.add(R.id.content_frame, fragment);
+//        ft.commit();
+//    }
+//}
