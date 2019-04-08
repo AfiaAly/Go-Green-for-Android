@@ -92,6 +92,13 @@ public class MainActivity extends AppCompatActivity {
             return user;
         }
 
+
+        protected void onProgressUpdate(String... text){
+            messageLogin.setVisibility(View.VISIBLE);
+            messageLogin.setText("Connecting...");
+            messageLogin.setTextColor(Color.BLUE);
+        }
+
         @Override
         protected void onPostExecute(User user){
             super.onPostExecute(user);

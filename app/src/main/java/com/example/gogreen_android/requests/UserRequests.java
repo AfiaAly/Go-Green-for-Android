@@ -3,6 +3,7 @@ package com.example.gogreen_android.requests;
 //import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -28,7 +29,7 @@ public class UserRequests {
         try{
 
             //Open URL connection
-            URL url = new URL("http://10.0.2.2:8080/login");
+            URL url = new URL("http://10.0.2.2/login");
             client = (HttpURLConnection) url.openConnection();
             client.setRequestMethod("POST");
             client.setDoOutput(true);
@@ -39,9 +40,17 @@ public class UserRequests {
             objOut.writeObject(user);
             objOut.flush();
             objOut.close();
+
+            //Receive object
+            ObjectInputStream objIn = new ObjectInputStream(client.getInputStream());
+            user = (User) objIn.readObject();
+            objIn.close();
         } catch (IOException e){
             e.printStackTrace();
 //            MainActivity.connectionError();
+        } catch (ClassNotFoundException e){
+            e.printStackTrace();
+            System.out.println("ERROR : Class not found");
         }
 
         return user;
