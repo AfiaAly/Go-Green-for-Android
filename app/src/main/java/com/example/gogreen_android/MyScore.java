@@ -1,5 +1,6 @@
 package com.example.gogreen_android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,8 +19,11 @@ public class MyScore extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_score);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("My Score");
         setSupportActionBar(toolbar);
 
+//        TextView header = (TextView) findViewById(R.id.toolbar_text);
+//        header.setText("My Score");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -29,6 +33,8 @@ public class MyScore extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     @Override
@@ -70,14 +76,13 @@ public class MyScore extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_my_score) {
-            // Handle action
-        } else if (id == R.id.nav_reduced_emssion) {
 
+        } else if (id == R.id.nav_reduced_emssion) {
+            Intent intent = new Intent(this, reducedEmission.class);
+            startActivity(intent);
         } else if (id == R.id.nav_my_basecase) {
 
-        } else if (id == R.id.nav_help) {
-
-        } else if (id == R.id.nav_settings) {
+        } else if (id == R.id.nav_logout){
 
         }
 

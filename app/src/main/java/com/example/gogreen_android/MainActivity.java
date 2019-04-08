@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Login to GoGreen");
         setSupportActionBar(toolbar);
 
         btnLogin = (Button) findViewById(R.id.loginButton);
