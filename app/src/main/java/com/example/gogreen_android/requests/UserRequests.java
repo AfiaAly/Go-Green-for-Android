@@ -82,10 +82,6 @@ public class UserRequests {
             objOut.close();
         } catch (IOException e){
             e.printStackTrace();
-<<<<<<< HEAD
-=======
-//            MainActivity.connectionError();
->>>>>>> 61f75bca9b3244659124e12671bb8d7d9c1d34d7
         }
         return user;
     }

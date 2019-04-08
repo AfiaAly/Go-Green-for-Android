@@ -1,5 +1,6 @@
 package com.example.gogreen_android;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -44,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                 //call myScore activity. For testing.
-//                Intent intent = new Intent(v.getContext(), MyScore.class);
-//                startActivity(intent);
+                Intent intent = new Intent(v.getContext(), MyScore.class);
+                startActivity(intent);
                 String username = edtUsername.getText().toString();
                 String password = edtPassword.getText().toString();
 
@@ -158,10 +159,6 @@ public class MainActivity extends AppCompatActivity {
         //send authentication to server
         try {
             User user = loginPostRequest(username, password);
-<<<<<<< HEAD
-
-=======
->>>>>>> 61f75bca9b3244659124e12671bb8d7d9c1d34d7
         } catch (IOException e) {
             System.out.println("IOException caught in login method");;
         }
