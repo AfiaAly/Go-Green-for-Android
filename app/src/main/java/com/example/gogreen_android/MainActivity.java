@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Login to GoGreen");
         setSupportActionBar(toolbar);
 
         btnLogin = (Button) findViewById(R.id.loginButton);
@@ -40,11 +41,19 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                //call myScore activity. For testing.
+//                Intent intent = new Intent(v.getContext(), MyScore.class);
+//                startActivity(intent);
                 String username = edtUsername.getText().toString();
                 String password = edtPassword.getText().toString();
 
                 //call login method
                 try {
+
+
+
                     AsyncTaskConnection taskConnection = new AsyncTaskConnection();
                     User user = new User(username, password, false);
                     ArrayList array = new ArrayList(1);
@@ -110,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
             } else if (!user.isSuccess()) {
                 messageLogin.setVisibility(View.VISIBLE);
-                messageLogin.setText("user is not success");
+                messageLogin.setText("Login Failed");
                 messageLogin.setTextColor(Color.RED);
                 return;
 
@@ -149,7 +158,10 @@ public class MainActivity extends AppCompatActivity {
         //send authentication to server
         try {
             User user = loginPostRequest(username, password);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 61f75bca9b3244659124e12671bb8d7d9c1d34d7
         } catch (IOException e) {
             System.out.println("IOException caught in login method");;
         }

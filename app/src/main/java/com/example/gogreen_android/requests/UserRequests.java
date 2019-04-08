@@ -29,7 +29,7 @@ public class UserRequests {
         try{
 
             //Open URL connection
-            URL url = new URL("http://10.0.2.2/login");
+            URL url = new URL("http://group-54.herokuapp.com/login");
             client = (HttpURLConnection) url.openConnection();
             client.setRequestMethod("POST");
             client.setDoOutput(true);
@@ -47,10 +47,11 @@ public class UserRequests {
             objIn.close();
         } catch (IOException e){
             e.printStackTrace();
+            System.out.println("ERROR: IO Exception at loginPostRequest");
 //            MainActivity.connectionError();
         } catch (ClassNotFoundException e){
             e.printStackTrace();
-            System.out.println("ERROR : Class not found");
+            System.out.println("ERROR : Class not found at loginPostRequest");
         }
 
         return user;
@@ -69,7 +70,7 @@ public class UserRequests {
         try{
 
             //Open URL connection
-            URL url = new URL("http://localhost:8080/signup");
+            URL url = new URL("https://group-54.herokuapp.com/signup");
             client = (HttpURLConnection) url.openConnection();
             client.setRequestMethod("POST");
             client.setDoOutput(true);
@@ -81,6 +82,10 @@ public class UserRequests {
             objOut.close();
         } catch (IOException e){
             e.printStackTrace();
+<<<<<<< HEAD
+=======
+//            MainActivity.connectionError();
+>>>>>>> 61f75bca9b3244659124e12671bb8d7d9c1d34d7
         }
         return user;
     }
@@ -98,7 +103,7 @@ public class UserRequests {
         try{
 
             //Open URL connection
-            URL url = new URL("http://localhost:8080/get/profile");
+            URL url = new URL("https://group-54.herokuapp.com/get/profile");
             client = (HttpURLConnection) url.openConnection();
             client.setRequestMethod("POST");
             client.setDoOutput(true);
