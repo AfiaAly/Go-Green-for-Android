@@ -1,5 +1,6 @@
 package com.example.gogreen_android;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -40,11 +41,19 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                //call myScore activity. For testing.
+                Intent intent = new Intent(v.getContext(), MyScore.class);
+                startActivity(intent);
                 String username = edtUsername.getText().toString();
                 String password = edtPassword.getText().toString();
 
                 //call login method
                 try {
+
+
+
                     AsyncTaskConnection taskConnection = new AsyncTaskConnection();
                     User user = new User(username, password, false);
                     ArrayList array = new ArrayList(1);
@@ -191,3 +200,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
+//
+//package com.example.gogreen_android;
+//
+//import android.os.Bundle;
+//import android.support.v4.app.FragmentTransaction;
+//import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.widget.Toolbar;
+//import android.support.v4.app.Fragment;
+//
+//public class MainActivity extends AppCompatActivity {
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main_trial);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//
+//        Fragment fragment = new InboxFragment();
+//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//        ft.add(R.id.content_frame, fragment);
+//        ft.commit();
+//    }
+//}
