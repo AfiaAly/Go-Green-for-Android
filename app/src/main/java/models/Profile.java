@@ -1,16 +1,14 @@
 package models;
 
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@ToString
+
 public class Profile {
 
-    /*@Getter @Setter*/ private String username;
-    /*@Getter @Setter*/ private String country;
-    /*@Getter @Setter*/ private String distance;
-    /*@Getter @Setter*/ private int income;
-    /*@Getter @Setter*/ private int carefficiency;
-    /*@Getter @Setter*/ private int electricitybill;
+    private String username;
+    private String country;
+    private String distance;
+    private int income;
+    private int carefficiency;
+    private int electricitybill;
 
     public Profile(String username, String country, String distance, int income, int carefficiency, int electricitybill) {
         this.username = username;

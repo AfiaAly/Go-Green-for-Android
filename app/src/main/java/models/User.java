@@ -2,13 +2,10 @@ package models;
 
 import java.io.Serializable;
 
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@ToString
 public class User implements Serializable {
-    /*@Getter @Setter*/ private String username;
-    /*@Getter @Setter*/ private String password;
-    /*@Getter @Setter*/ private boolean success;
+    private String username;
+    private String password;
+    private boolean success;
 
     public User(String username, String password, boolean success) {
         this.username = username;

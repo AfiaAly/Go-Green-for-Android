@@ -2,12 +2,9 @@ package models;
 
 import java.time.LocalDate;
 
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@ToString
 public class SolarPanels {
-    /*@Getter @Setter*/  private Boolean solarpanel;
-    /*@Getter @Setter*/  private LocalDate date;
+    private Boolean solarpanel;
+    private LocalDate date;
 
     public SolarPanels(Boolean solarpanel, LocalDate date) {
         this.solarpanel = solarpanel;

@@ -104,20 +104,16 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(user);
             System.out.println(user.toString());
             if (user.isSuccess()) {
-                //creating new Parent to change scenes
-                //Parent root = FXMLLoader.load(getClass().getResource("/Statistics.fxml"));
-                //change scene
-                //ClientMain.setScene(root);
                 messageLogin.setVisibility(View.VISIBLE);
                 messageLogin.setText("Login Success!");
                 messageLogin.setTextColor(Color.GREEN);
-
 
             } else if (!user.isSuccess()) {
                 messageLogin.setVisibility(View.VISIBLE);
                 messageLogin.setText("user is not success");
                 messageLogin.setTextColor(Color.RED);
                 return;
+
             } else {
                 messageLogin.setVisibility(View.VISIBLE);
                 messageLogin.setText("Something else went wrong");
@@ -150,43 +146,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void login(String username, String password) throws IOException {
 
-//        messageLogin = (TextView) findViewById(R.id.messageLogin);
-//        messageLogin.setText("");
-////        String username = nameLogin.getText();
-////        String password = pwLogin.getText();
-////        StatisticsController.setUserName(username); //(not sure if needed?)
-//        if (password.equals("") || username.equals("")) {
-//            messageLogin.setVisibility(View.VISIBLE);
-//            messageLogin.setText("Fields cannot be empty");
-//            messageLogin.setTextColor(Color.RED);
-//            return;
-//        }
         //send authentication to server
         try {
             User user = loginPostRequest(username, password);
-//
-//            //authenticating
-//
-//            if (user.isSuccess()) {
-//                //creating new Parent to change scenes
-//                //Parent root = FXMLLoader.load(getClass().getResource("/Statistics.fxml"));
-//                //change scene
-//                //ClientMain.setScene(root);
-//                messageLogin.setVisibility(View.VISIBLE);
-//                messageLogin.setText("Login Success!");
-//                messageLogin.setTextColor(Color.GREEN);
-//
-//
-//            } else {
-//                messageLogin.setVisibility(View.VISIBLE);
-//                messageLogin.setText("Username or password invalid");
-//                messageLogin.setTextColor(Color.RED);
-//                return;
-//            }
+
         } catch (IOException e) {
-//            messageLogin.setVisibility(View.VISIBLE);
-//            messageLogin.setText("IO Error occured");
-//            messageLogin.setTextColor(Color.RED);
             System.out.println("IOException caught in login method");;
         }
     }

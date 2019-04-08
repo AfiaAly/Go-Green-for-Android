@@ -81,7 +81,6 @@ public class UserRequests {
             objOut.close();
         } catch (IOException e){
             e.printStackTrace();
-//            MainActivity.connectionError(); //TODO change loginMessage in MainActivity to show error
         }
         return user;
     }
@@ -111,50 +110,8 @@ public class UserRequests {
             objOut.close();
         } catch (IOException e){
             e.printStackTrace();
-//            MainActivity.connectionError(); //Method is non-static... What?
         }
         return profile;
-    }
-//        RestTemplate restTemplate = new RestTemplate();
-//        profile = restTemplate.postForObject("http://localhost:8080/get/profile", profile, Profile.class);
-
-    /**
-     * This method sends the base case to the server.
-     * @param Username their username identifies the current user.
-     * @param income sets the income for the user.
-     * @param distance sets the distance parameter for the user.
-     * @param country sets the home country for the user.
-     * @param carefficiency sets the carEfficiency for the user.
-     * @param electricetyBill sets the electricityBill for the user.
-     * @return returns proof that the base case was sent.
-     */
-     public static Profile sendProfilepostRequest(String Username, int income, String distance, String country,
-                                                    int carefficiency, int electricetyBill) {
-        Profile profile = new Profile(Username, country, distance, income, carefficiency, electricetyBill);
-
-         HttpURLConnection client = null;
-         try{
-
-             //Open URL connection
-             URL url = new URL("http://localhost:8080/send/profile");
-             client = (HttpURLConnection) url.openConnection();
-             client.setRequestMethod("POST");
-             client.setDoOutput(true);
-
-             //Send object
-             ObjectOutputStream objOut = new ObjectOutputStream(client.getOutputStream());
-             objOut.writeObject(profile);
-             objOut.flush();
-             objOut.close();
-         } catch (IOException e){
-             e.printStackTrace();
-//            MainActivity.connectionError(); //Method is non-static... What?
-         }
-         return profile;
-
-//        RestTemplate restTemplate = new RestTemplate();
-//        profile = restTemplate.postForObject("http://localhost:8080/send/profile", profile, Profile.class);
-//        return profile;
     }
 
     /**
@@ -184,9 +141,6 @@ public class UserRequests {
             objOut.close();
         } catch (IOException e){
             e.printStackTrace();
-//            MainActivity.connectionError(); //Method is non-static... What?
         }
-//        RestTemplate restTemplate = new RestTemplate();
-//        restTemplate.put("http://localhost:8080/send/solar", solarpanels);
     }
 }
