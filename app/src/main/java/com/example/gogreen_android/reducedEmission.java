@@ -1,5 +1,6 @@
 package com.example.gogreen_android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +19,7 @@ public class reducedEmission extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reduced_emission);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Reduced Emission");
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -65,22 +67,22 @@ public class reducedEmission extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        // TODO Handle navigation view item clicks here.
         int id = item.getItemId();
+//        Class target = null;
+//        Intent intent = new Intent(this, target);
 
         if (id == R.id.nav_my_score) {
-            // Handle the camera action
+            Intent intent = new Intent(this, MyScore.class);
+            startActivity(intent);
         } else if (id == R.id.nav_reduced_emssion) {
-
+//            target = reducedEmission.class;
         } else if (id == R.id.nav_my_basecase) {
-
-        } else if (id == R.id.nav_help) {
-
-        } else if (id == R.id.nav_settings) {
-
+            
         } else if (id == R.id.nav_logout) {
 
         }
+//        startActivity(intent);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
