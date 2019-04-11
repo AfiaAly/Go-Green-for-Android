@@ -2,8 +2,12 @@ package com.example.gogreen_android.requests;
 
 //import org.springframework.web.client.RestTemplate;
 
+//import com.google.gson.Gson;
+
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -25,36 +29,79 @@ public class UserRequests {
      */
     public static User loginPostRequest(String username, String password) throws IOException {
         User user = new User(username, password, false);
-        HttpURLConnection client = null;
-        try{
-
-            //Open URL connection
-            URL url = new URL("http://group-54.herokuapp.com/login");
-            client = (HttpURLConnection) url.openConnection();
-            client.setRequestMethod("POST");
-            client.setDoOutput(true);
-            client.setDoInput(true);
-
-            //Send object
-            ObjectOutputStream objOut = new ObjectOutputStream(client.getOutputStream());
-            objOut.writeObject(user);
-            objOut.flush();
-            objOut.close();
-
-            //Receive object
-            ObjectInputStream objIn = new ObjectInputStream(client.getInputStream());
-            user = (User) objIn.readObject();
-            objIn.close();
-        } catch (IOException e){
-            e.printStackTrace();
-            System.out.println("ERROR: IO Exception at loginPostRequest");
-//            MainActivity.connectionError();
-        } catch (ClassNotFoundException e){
-            e.printStackTrace();
-            System.out.println("ERROR : Class not found at loginPostRequest");
-        }
-
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+//        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        user = restTemplate.postForObject( UrlHolder.getUrl() + "login", user, User.class);
         return user;
+
+
+//        HttpURLConnection client = null;
+//        try{
+//
+//            //Open URL connection
+//            URL url = new URL("http://group-54.herokuapp.com/login");
+//            client = (HttpURLConnection) url.openConnection();
+//            client.setRequestMethod("POST");
+//            client.setRequestProperty("Content-Type", "application/json; utf-8");
+//            client.setRequestProperty("Accept", "application/jsom");
+//            client.setDoOutput(true);
+//            client.setDoInput(true);
+//
+//            //Convert object to JSON
+////            Gson gson = new Gson();
+////            String json = gson.toJson(user);
+//
+//            //Send object
+//            try(OutputStream os = client.getOutputStream()){
+////                byte[] input = json.getBytes("utf-8");
+////                os.write(input, 0, input.length);
+//            }
+//
+//            //Send object
+////            ObjectOutputStream objOut = new ObjectOutputStream(client.getOutputStream());
+////            objOut.writeObject(json);
+////            objOut.flush();
+////            objOut.close();
+//
+//            //Receive response
+//            try(BufferedReader br = new BufferedReader(
+//                    new InputStreamReader(client.getInputStream(), "utf-8"))){
+//                StringBuilder response = new StringBuilder();
+//                String responseLine = null;
+//                while ((responseLine = br.readLine()) != null) {
+//                    response.append(responseLine.trim());
+//                }
+//                System.out.println(response.toString());
+//                int status = client.getResponseCode();
+//                System.out.println(status);
+//            }
+//
+//
+////            InputStream inputStream;
+////
+////            int status = client.getResponseCode();
+////            System.out.println(status);
+////            if (status != HttpURLConnection.HTTP_OK)
+////                inputStream = client.getErrorStream();
+////            else
+////                inputStream = client.getInputStream();
+////
+////            //Receive object
+////            ObjectInputStream objIn = new ObjectInputStream(client.getInputStream());
+////            user = (User) objIn.readObject();
+////            objIn.close();
+//        } catch (IOException e){
+//            e.printStackTrace();
+//            System.out.println("ERROR: IO Exception at loginPostRequest");
+////            MainActivity.connectionError();
+//        }
+////        catch (ClassNotFoundException e){
+////            e.printStackTrace();
+////            System.out.println("ERROR : Class not found at loginPostRequest");
+////        }
+//
+//        return user;
     }
 
     /**

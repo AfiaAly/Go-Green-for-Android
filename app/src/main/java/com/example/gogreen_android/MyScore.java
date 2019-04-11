@@ -22,9 +22,6 @@ public class MyScore extends AppCompatActivity
         toolbar.setTitle("My Score");
         setSupportActionBar(toolbar);
 
-//        TextView header = (TextView) findViewById(R.id.toolbar_text);
-//        header.setText("My Score");
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -76,14 +73,16 @@ public class MyScore extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_my_score) {
-
+            Intent intent = new Intent(this, MyScore.class);
+            startActivity(intent);
         } else if (id == R.id.nav_reduced_emssion) {
-            Intent intent = new Intent(this, reducedEmission.class);
+            Intent intent = new Intent(this, ReducedEmission.class);
             startActivity(intent);
         } else if (id == R.id.nav_my_basecase) {
 
         } else if (id == R.id.nav_logout){
-
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -18,6 +18,7 @@
             layout="@layout/toolbar_main" />
 
         <FrameLayout
+            android:background="@color/colorPrimary"
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -40,91 +41,3 @@
         app:menu="@menu/menu_nav" />
 
 </android.support.v4.widget.DrawerLayout>
-
-
-
-
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-    <!--<android.support.design.widget.CoordinatorLayout-->
-    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--tools:context=".MyScore">-->
-
-    <!--<android.support.design.widget.AppBarLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:theme="@style/AppTheme.AppBarOverlay">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/my_score"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="@string/my_score"-->
-    <!--android:textSize="24sp" />-->
-
-
-    <!--</android.support.design.widget.AppBarLayout>-->
-
-    <!--<include-->
-    <!--android:id="@+id/include2"-->
-    <!--layout="@layout/content_my_score"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="676dp"-->
-    <!--android:layout_gravity="bottom"-->
-    <!--android:layout_marginTop="@dimen/nav_header_height" />-->
-    <!--<include-->
-    <!--layout="@layout/toolbar_main"-->
-    <!--android:id="@+id/toolbar" />-->
-    <!---->
-    <!--</android.support.design.widget.CoordinatorLayout>-->
-
-
-
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<android.support.design.widget.CoordinatorLayout-->
-    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--tools:context=".reducedEmission">-->
-
-    <!--<android.support.design.widget.AppBarLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/reducedEmission"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/reduced_emission_title"-->
-            <!--android:textSize="24sp" />-->
-
-    <!--</android.support.design.widget.AppBarLayout>-->
-
-    <!--<include-->
-        <!--layout="@layout/content_reduced_emission"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="676dp"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--android:layout_marginTop="@dimen/nav_header_height" />-->
-
-    <!--<include-->
-        <!--android:id="@id/toolbar"-->
-        <!--layout="@layout/toolbar_main"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content" />-->
-
-    <!--&lt;!&ndash;<android.support.design.widget.NavigationView&ndash;&gt;-->
-        <!--&lt;!&ndash;android:id="@+id/nav_view"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_gravity="start"&ndash;&gt;-->
-        <!--&lt;!&ndash;app:headerLayout="@layout/nav_header"&ndash;&gt;-->
-        <!--&lt;!&ndash;app:menu="@menu/menu_nav" />&ndash;&gt;-->
-
-<!--</android.support.design.widget.CoordinatorLayout>-->

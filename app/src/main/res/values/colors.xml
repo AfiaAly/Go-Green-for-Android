@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#B1B695</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="password_blue">#002AFF</color>
+    <color name="colorSecondary">#2E4052</color>
+    <color name="colorTextPrmiary">#B2B2B2</color>
 </resources>

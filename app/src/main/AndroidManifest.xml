@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".reducedEmission"
+            android:name=".ReducedEmission"
             android:label="@string/title_activity_reduced_emission"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

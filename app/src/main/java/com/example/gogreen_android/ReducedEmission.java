@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class reducedEmission extends AppCompatActivity
+public class ReducedEmission extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
@@ -69,20 +69,19 @@ public class reducedEmission extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // TODO Handle navigation view item clicks here.
         int id = item.getItemId();
-//        Class target = null;
-//        Intent intent = new Intent(this, target);
 
         if (id == R.id.nav_my_score) {
             Intent intent = new Intent(this, MyScore.class);
             startActivity(intent);
         } else if (id == R.id.nav_reduced_emssion) {
-//            target = reducedEmission.class;
+            Intent intent = new Intent(this, ReducedEmission.class);
+            startActivity(intent);
         } else if (id == R.id.nav_my_basecase) {
             
         } else if (id == R.id.nav_logout) {
-
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
-//        startActivity(intent);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

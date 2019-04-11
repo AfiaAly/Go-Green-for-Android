@@ -1,6 +1,5 @@
 package com.example.gogreen_android;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -45,10 +44,12 @@ public class MainActivity extends AppCompatActivity {
 
 
                 //call myScore activity. For testing.
-                Intent intent = new Intent(v.getContext(), MyScore.class);
-                startActivity(intent);
+//                Intent intent = new Intent(v.getContext(), MyScore.class);
+//                startActivity(intent);
                 String username = edtUsername.getText().toString();
+                System.out.println(username);
                 String password = edtPassword.getText().toString();
+                System.out.println(password);;
 
                 //call login method
                 try {
@@ -91,8 +92,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected User doInBackground(ArrayList... arrayLists){
             user = (User) arrayLists[0].get(0);
+            System.out.println(user);
             try {
-                login(user.getUsername(), user.getPassword());
+                user = login(user.getUsername(), user.getPassword());
+                return user;
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (IndexOutOfBoundsException e){
@@ -154,13 +157,16 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void login(String username, String password) throws IOException {
+    public User login(String username, String password) throws IOException {
 
         //send authentication to server
         try {
             User user = loginPostRequest(username, password);
+            return user;
         } catch (IOException e) {
             System.out.println("IOException caught in login method");;
         }
+        User userFail;
+        return userFail = new User(username, password, false);
     }
 }
