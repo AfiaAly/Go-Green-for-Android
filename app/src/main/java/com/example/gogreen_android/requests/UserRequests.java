@@ -4,6 +4,12 @@ package com.example.gogreen_android.requests;
 
 //import com.google.gson.Gson;
 
+import android.os.AsyncTask;
+
+import com.example.gogreen_android.models.Profile;
+import com.example.gogreen_android.models.SolarPanels;
+import com.example.gogreen_android.models.User;
+
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,10 +18,7 @@ import java.io.ObjectOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
-
-import models.Profile;
-import models.SolarPanels;
-import models.User;
+import java.util.ArrayList;
 
 
 public class UserRequests {
@@ -28,108 +31,39 @@ public class UserRequests {
      * @return User object with success flag set to true or false
      */
     public static User loginPostRequest(String username, String password) throws IOException {
-        User user = new User(username, password, false);
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-//        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-        user = restTemplate.postForObject( UrlHolder.getUrl() + "login", user, User.class);
-        return user;
-
-
-//        HttpURLConnection client = null;
-//        try{
-//
-//            //Open URL connection
-//            URL url = new URL("http://group-54.herokuapp.com/login");
-//            client = (HttpURLConnection) url.openConnection();
-//            client.setRequestMethod("POST");
-//            client.setRequestProperty("Content-Type", "application/json; utf-8");
-//            client.setRequestProperty("Accept", "application/jsom");
-//            client.setDoOutput(true);
-//            client.setDoInput(true);
-//
-//            //Convert object to JSON
-////            Gson gson = new Gson();
-////            String json = gson.toJson(user);
-//
-//            //Send object
-//            try(OutputStream os = client.getOutputStream()){
-////                byte[] input = json.getBytes("utf-8");
-////                os.write(input, 0, input.length);
-//            }
-//
-//            //Send object
-////            ObjectOutputStream objOut = new ObjectOutputStream(client.getOutputStream());
-////            objOut.writeObject(json);
-////            objOut.flush();
-////            objOut.close();
-//
-//            //Receive response
-//            try(BufferedReader br = new BufferedReader(
-//                    new InputStreamReader(client.getInputStream(), "utf-8"))){
-//                StringBuilder response = new StringBuilder();
-//                String responseLine = null;
-//                while ((responseLine = br.readLine()) != null) {
-//                    response.append(responseLine.trim());
-//                }
-//                System.out.println(response.toString());
-//                int status = client.getResponseCode();
-//                System.out.println(status);
-//            }
-//
-//
-////            InputStream inputStream;
-////
-////            int status = client.getResponseCode();
-////            System.out.println(status);
-////            if (status != HttpURLConnection.HTTP_OK)
-////                inputStream = client.getErrorStream();
-////            else
-////                inputStream = client.getInputStream();
-////
-////            //Receive object
-////            ObjectInputStream objIn = new ObjectInputStream(client.getInputStream());
-////            user = (User) objIn.readObject();
-////            objIn.close();
-//        } catch (IOException e){
-//            e.printStackTrace();
-//            System.out.println("ERROR: IO Exception at loginPostRequest");
-////            MainActivity.connectionError();
-//        }
-////        catch (ClassNotFoundException e){
-////            e.printStackTrace();
-////            System.out.println("ERROR : Class not found at loginPostRequest");
-////        }
-//
-//        return user;
+        try {
+            AsyncTaskConnection taskConnection = new AsyncTaskConnection();
+            ArrayList array = new ArrayList(2);
+            array.add(0, username);
+            array.add(1, password);
+            taskConnection.execute(array);
+            System.out.println("Connection executed");
+            User result = (User) taskConnection.get();
+            System.out.println("...." + result);
+            return result;
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Error occured at loginPostRequest() method");
+        }
+        User failedUser = new User("0000", "0000", false);
+        return failedUser;
     }
 
-    /**
-     * Sends a POST request with User object to try to sign a user in.
-     *
-     * @param username username
-     * @param password password
-     * @return User object with success flag set to true or false
-     */
-    public static User signupPostRequest(String username, String password) {
+    public static User returnUser(User user){
+        return user;
+    }
+
+    public static Profile returnProfile(Profile profile){
+        return profile;
+    }
+
+    public static User loginRequestConnection(String username, String password) throws IOException {
         User user = new User(username, password, false);
-        HttpURLConnection client = null;
-        try{
-
-            //Open URL connection
-            URL url = new URL("https://group-54.herokuapp.com/signup");
-            client = (HttpURLConnection) url.openConnection();
-            client.setRequestMethod("POST");
-            client.setDoOutput(true);
-
-            //Send object
-            ObjectOutputStream objOut = new ObjectOutputStream(client.getOutputStream());
-            objOut.writeObject(user);
-            objOut.flush();
-            objOut.close();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+        System.out.println(username + password);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        user = restTemplate.postForObject( UrlHolder.getUrl() + "login", user, User.class);
+        System.out.println("Result from loginRequestConnection:" + user);
         return user;
     }
 
@@ -139,27 +73,86 @@ public class UserRequests {
      * @return returns the user containing the base case.
      */
     public static Profile getProfilepostRequest(String username) {
+        try {
+            AsyncTaskConnection taskConnection = new AsyncTaskConnection();
+            ArrayList array = new ArrayList(1);
+            array.add(0, username);
+            taskConnection.execute(array);
+            Profile result = (Profile) taskConnection.objOut;
+            System.out.println("profile object return at getProfilepostRequest() is: " + result);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error occured at getProfilepostRequest() method");
+        }
+        Profile failedProfile = new Profile();
+        return failedProfile;
+    }
+
+    public static Profile getProfileConnection(String username) throws IOException {
         Profile profile = new Profile();
         profile.setUsername(username);
-
-        HttpURLConnection client = null;
-        try{
-
-            //Open URL connection
-            URL url = new URL("https://group-54.herokuapp.com/get/profile");
-            client = (HttpURLConnection) url.openConnection();
-            client.setRequestMethod("POST");
-            client.setDoOutput(true);
-
-            //Send object
-            ObjectOutputStream objOut = new ObjectOutputStream(client.getOutputStream());
-            objOut.writeObject(profile);
-            objOut.flush();
-            objOut.close();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        profile = restTemplate.postForObject(UrlHolder.getUrl() + "get/profile", profile, Profile.class);
+        System.out.println("profile object at getProfileConnection() is:" + profile);
         return profile;
+    }
+
+    static class AsyncTaskConnection extends AsyncTask<ArrayList, Void, Object>{ //.................................................
+
+        Object objOut;
+        String username;
+        String password;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Object doInBackground(ArrayList... arrayLists) {
+            if (arrayLists[0].size() == 1){
+                try {
+                    System.out.println("Array acquired has length 1. Executing method : getProfileConnection(username)");
+                    username = (String) arrayLists[0].get(0);
+                    objOut = (Profile) getProfileConnection(username);
+                    System.out.println("objOut at UserRequests.java is: " + objOut);
+                    return objOut;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("IO Error occured at AsyncTask while calling getProfileConnection()");
+                }
+            } else if (arrayLists[0].size() == 2){
+                try {
+                    System.out.println("Array acquired has length 2. Executing method loginRequestConnection()");
+                    username = (String) arrayLists[0].get(0);
+                    password = (String) arrayLists[0].get(1);
+                    objOut = (User) loginRequestConnection(username, password);
+                    System.out.println("objOut at UserRequests.java is: " + objOut);
+                    return objOut;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("IO Error occured at AsyncTask while calling loginRequestConnection()");
+                }
+            } else {
+                System.out.println("Something wrong with arrays passed to AsyncTask in UserRequests.java");
+            }
+            Object failed = new Object();
+            return failed;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) { //.................................................................................
+            super.onPostExecute(o);
+            if (o instanceof User){
+                User user = (User) o;
+                returnUser(user);
+            } else if (o instanceof Profile){
+                Profile profile = (Profile) o;
+                returnProfile(profile);
+            }
+        }
     }
 
     /**

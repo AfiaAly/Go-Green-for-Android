@@ -1,30 +1,39 @@
 package com.example.gogreen_android;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.gogreen_android.controllers.LoginController;
+import com.example.gogreen_android.controllers.StatisticsController;
+import com.example.gogreen_android.models.User;
+import com.example.gogreen_android.requests.UserRequests;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
-import models.User;
-
-import static com.example.gogreen_android.requests.UserRequests.loginPostRequest;
-
 public class MainActivity extends AppCompatActivity {
 
+    private User user;
     private Button btnLogin;
     private EditText edtUsername;
     private EditText edtPassword;
     private TextView messageLogin;
+
+
+    protected void onSuccess(){
+        Intent intent = new Intent(this, MyScore.class);
+        System.out.println("onSuccess() method reads username as:" + edtUsername.getText().toString());
+        intent.putExtra("username", edtUsername.getText().toString());
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-                //call myScore activity. For testing.
+//                call myScore activity. For testing.
 //                Intent intent = new Intent(v.getContext(), MyScore.class);
 //                startActivity(intent);
                 String username = edtUsername.getText().toString();
@@ -53,13 +61,11 @@ public class MainActivity extends AppCompatActivity {
 
                 //call login method
                 try {
-
-
-
                     AsyncTaskConnection taskConnection = new AsyncTaskConnection();
-                    User user = new User(username, password, false);
-                    ArrayList array = new ArrayList(1);
-                    array.add(0, user);
+//                    User user = new User(username, password, false);
+                    ArrayList array = new ArrayList(2);
+                    array.add(0, username);
+                    array.add(1, password);
                     taskConnection.execute(array);
                 } catch (Exception e) {
                     messageLogin.setText("IO Error occured");
@@ -70,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
     class AsyncTaskConnection extends AsyncTask<ArrayList, Void, User> {
 
-        User user;
+//        User user;
 
         @Override
         protected void onPreExecute() {
@@ -81,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
             String username = edtUsername.getText().toString();
             String password = edtPassword.getText().toString();
+            StatisticsController.setUserName(username);
             if (password.equals("") || username.equals("")) {
                 messageLogin.setVisibility(View.VISIBLE);
                 messageLogin.setText("Fields cannot be empty");
@@ -91,10 +98,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected User doInBackground(ArrayList... arrayLists){
-            user = (User) arrayLists[0].get(0);
-            System.out.println(user);
+            String username = arrayLists[0].get(0).toString();
+            String password = arrayLists[0].get(1).toString();
+            user = new User(username, password, false);
+            System.out.println(user + "at doInBackground() in MainActivity.java");
             try {
-                user = login(user.getUsername(), user.getPassword());
+                user = login(username, password);
+//                System.out.println(user);
                 return user;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -115,58 +125,44 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(User user){
             super.onPostExecute(user);
-            System.out.println(user.toString());
-            if (user.isSuccess()) {
-                messageLogin.setVisibility(View.VISIBLE);
-                messageLogin.setText("Login Success!");
-                messageLogin.setTextColor(Color.GREEN);
+//            System.out.println(user.toString());
+            if (user != null) {
+                if (user.isSuccess()) {
+                    messageLogin.setVisibility(View.VISIBLE);
+                    messageLogin.setText("Login Success!");
+                    messageLogin.setTextColor(Color.GREEN);
+                    //                init(user.getUsername());
+                    System.out.println("After login succes, user is:" + user.getUsername() + " & pass is:" + user.getPassword());
+                    onSuccess();
 
-            } else if (!user.isSuccess()) {
-                messageLogin.setVisibility(View.VISIBLE);
-                messageLogin.setText("Login Failed");
-                messageLogin.setTextColor(Color.RED);
-                return;
+                } else if (!user.isSuccess()) {
+                    messageLogin.setVisibility(View.VISIBLE);
+                    messageLogin.setText("Login Failed");
+                    messageLogin.setTextColor(Color.RED);
+                    return;
 
+                } else {
+                    messageLogin.setVisibility(View.VISIBLE);
+                    messageLogin.setText("Something else went wrong");
+                    messageLogin.setTextColor(Color.RED);
+                }
             } else {
-                messageLogin.setVisibility(View.VISIBLE);
-                messageLogin.setText("Something else went wrong");
-                messageLogin.setTextColor(Color.RED);
+                System.out.println("User passed to onPostExecute is null");
             }
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public User login(String username, String password) throws IOException {
 
-        //send authentication to server
+        //Calls Login method, which has actual connection code
         try {
-            User user = loginPostRequest(username, password);
+            LoginController.setUserName(username);
+            user = (User) UserRequests.loginRequestConnection(username, password); //...............................................
+            System.out.println(user + "at login()");
             return user;
         } catch (IOException e) {
             System.out.println("IOException caught in login method");;
         }
-        User userFail;
-        return userFail = new User(username, password, false);
+        return user;
     }
 }

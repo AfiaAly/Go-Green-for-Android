@@ -1,6 +1,7 @@
 package com.example.gogreen_android;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,13 +11,66 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.example.gogreen_android.controllers.StatisticsController;
+import com.example.gogreen_android.models.Statistics;
+import com.example.gogreen_android.requests.GetRequests;
+import com.example.gogreen_android.requests.UserRequests;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class MyScore extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    Statistics stats;
+
+    class AsyncTaskConnection extends AsyncTask<ArrayList, Statistics, Statistics> {
+
+        String username;
+
+        @Override
+        protected Statistics doInBackground(ArrayList... arrayLists) {
+            username = (String) arrayLists[0].get(0);
+            init(username);
+            System.out.println("Initialised with username: " + username);
+            return init(username);
+        }
+
+        @Override
+        protected void onPostExecute(Statistics statistics) {
+            stats = statistics;
+            System.out.println("Retrieved username from StatisticsController; " + stats.getUsername());
+            getStats();
+        }
+    }
+    private Statistics init(String username){
+        StatisticsController.setUserName(username);
+//        ProfileController.setUserName(username);
+//        StatisticsController.postRequests = new PostRequests();
+        StatisticsController.getRequests = new GetRequests();
+//        StatisticsController.transport = new Transport(username, 0, 0);
+//        StatisticsController.lifestyle = new Lifestyle(username, false, false,
+//                0);
+//        StatisticsController.vegetarianMeal = StatisticsController.getRequests.getVegetarianMeal(username);
+        try{
+            StatisticsController.profile = UserRequests.getProfileConnection(username);
+            StatisticsController.statistics = StatisticsController.getRequests.getStatsConnection(username);
+            System.out.println("StatisticsController.statistics at init() is: " + StatisticsController.statistics);
+            System.out.println(StatisticsController.statistics.getClass() + " is the Class");
+        } catch (IOException e){
+            e.printStackTrace();
+            System.out.println("IO Error occured at init()");
+        }
+        return StatisticsController.statistics;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_my_score);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("My Score");
@@ -31,7 +85,32 @@ public class MyScore extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        TextView score = (TextView) findViewById(R.id.textView3);
 
+        Intent intent = getIntent();
+        if (intent != null) {
+            String username = intent.getStringExtra("username");
+            ArrayList array = new ArrayList(1);
+            array.add(0, username);
+            AsyncTaskConnection taskConnection = new AsyncTaskConnection();
+            taskConnection.execute(array);
+//            System.out.println("Retrieved username from StatisticsController; " + stats.getUsername());
+//        System.out.println("Initialised username:" + username);
+        } else {
+            System.out.println("Intent passed to myScore.java is null");
+        }
+
+//        StatisticsController.setUserName(username);
+//        StatisticsController.statistics = StatisticsController.getRequests.getStatistics(username);
+//        StatisticsController.vegMeal = StatisticsController.getRequests.getVegetarianMeal(username);
+
+//        StatisticsController.initialise();
+        //TODO Get score of user
+//        score.setText(user.getScore());
+    }
+
+    public void getStats(){
+        System.out.println("Retrieved score from StatisticsController; " + stats.getScore());
     }
 
     @Override
@@ -40,7 +119,7 @@ public class MyScore extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+
         }
     }
 
