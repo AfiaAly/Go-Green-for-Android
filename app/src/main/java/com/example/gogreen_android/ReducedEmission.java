@@ -1,6 +1,7 @@
 package com.example.gogreen_android;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,9 +11,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.example.gogreen_android.controllers.StatisticsController;
+import com.example.gogreen_android.models.Statistics;
+import com.example.gogreen_android.requests.GetRequests;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class ReducedEmission extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    Statistics stats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +41,60 @@ public class ReducedEmission extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Intent intent = getIntent();
+        if (intent != null){
+            String username = intent.getStringExtra("username");
+            System.out.println("Username retrieved from intent is: " + username);
+            ArrayList array = new ArrayList(1);
+            array.add(0, username);
+            AsyncTaskConnection taskConnection = new AsyncTaskConnection();
+            taskConnection.execute(array);
+        } else {
+            System.out.println("Intent passed to myScore.java is null");
+        }
+    }
+
+    class AsyncTaskConnection extends AsyncTask<ArrayList, Statistics, Statistics> {
+
+        String username;
+
+        @Override
+        protected Statistics doInBackground(ArrayList... arrayLists) {
+            username = (String) arrayLists[0].get(0);
+            init(username);
+            System.out.println("Initialised with username: " + username);
+            return init(username);
+        }
+
+        @Override
+        protected void onPostExecute(Statistics statistics) {
+            stats = statistics;
+            System.out.println("Retrieved username from StatisticsController; " + stats.getUsername());
+            setStats();
+        }
+    }
+
+    private Statistics init(String username){
+        StatisticsController.setUserName(username);
+//        ProfileController.setUserName(username);
+//        StatisticsController.postRequests = new PostRequests();
+        StatisticsController.getRequests = new GetRequests();
+//        StatisticsController.transport = new Transport(username, 0, 0);
+//        StatisticsController.lifestyle = new Lifestyle(username, false, false,
+//                0);
+//        StatisticsController.vegetarianMeal = StatisticsController.getRequests.getVegetarianMeal(username);
+        try{
+//            StatisticsController.profile = UserRequests.getProfileConnection(username);
+            System.out.println("Username at init() at ReducedEmission.java is: " + username);
+            StatisticsController.statistics = StatisticsController.getRequests.getStatsConnection(username);
+            System.out.println("StatisticsController.statistics at init() is: " + StatisticsController.statistics);
+            System.out.println(StatisticsController.statistics.getClass() + " is the Class");
+        } catch (IOException e){
+            e.printStackTrace();
+            System.out.println("IO Error occured at init()");
+        }
+        return StatisticsController.statistics;
     }
 
     @Override
@@ -74,10 +139,8 @@ public class ReducedEmission extends AppCompatActivity
             Intent intent = new Intent(this, MyScore.class);
             startActivity(intent);
         } else if (id == R.id.nav_reduced_emssion) {
-            Intent intent = new Intent(this, ReducedEmission.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_my_basecase) {
-            
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_logout) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -86,5 +149,24 @@ public class ReducedEmission extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void setStats(){
+        TextView emissionTotal = findViewById(R.id.totalEmission);
+        TextView emissionVeggie = findViewById(R.id.emission_veg_meal);
+        TextView emissionBike = findViewById(R.id.emission_bike);
+        TextView emissionPT = findViewById(R.id.emission_pt);
+        TextView emissionLocalProd = findViewById(R.id.emission_localProduce);
+        TextView emissionRoomTemp = findViewById(R.id.emission_roomTemp);
+        TextView emissionSolarPanels = findViewById(R.id.emission_solarPanels);
+
+        emissionTotal.setText(Integer.toString(stats.getTotalReducedEmission()));
+        emissionVeggie.setText(Integer.toString(stats.getReducedEmissionByVegetarianMeal()));
+        emissionBike.setText(Integer.toString(stats.getReducedEmissionByTravelingByBike()));
+        emissionPT.setText(Integer.toString(stats.getReducedEmissionByTravelingByPublicTransport()));
+        emissionLocalProd.setText(Integer.toString(stats.getReducedEmissionByBuyingLocalProducts()));
+        emissionRoomTemp.setText(Integer.toString(stats.getReducedEmissionByRoomTemperature()));
+        emissionSolarPanels.setText(Integer.toString(stats.getReducedEmissionBySolarPanels()));
+
     }
 }

@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.example.gogreen_android.controllers.StatisticsController;
 import com.example.gogreen_android.models.Statistics;
 import com.example.gogreen_android.requests.GetRequests;
-import com.example.gogreen_android.requests.UserRequests;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,6 +35,51 @@ public class MyScore extends AppCompatActivity
     CustomGauge veggieMealGauge;
     CustomGauge travelGauge;
     PieChartView travelChart;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_my_score);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("My Score");
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        TextView score = (TextView) findViewById(R.id.my_Score);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            String username = intent.getStringExtra("username");
+            ArrayList array = new ArrayList(1);
+            array.add(0, username);
+            AsyncTaskConnection taskConnection = new AsyncTaskConnection();
+            taskConnection.execute(array);
+            
+//            navUsername.setText(username.toString());
+//            System.out.println("Retrieved username from StatisticsController; " + stats.getUsername());
+//        System.out.println("Initialised username:" + username);
+        } else {
+            System.out.println("Intent passed to myScore.java is null");
+        }
+
+//        StatisticsController.setUserName(username);
+//        StatisticsController.statistics = StatisticsController.getRequests.getStatistics(username);
+//        StatisticsController.vegMeal = StatisticsController.getRequests.getVegetarianMeal(username);
+
+//        StatisticsController.initialise();
+//        score.setText(user.getScore());
+
+    }
 
     class AsyncTaskConnection extends AsyncTask<ArrayList, Statistics, Statistics> {
 
@@ -66,7 +110,7 @@ public class MyScore extends AppCompatActivity
 //                0);
 //        StatisticsController.vegetarianMeal = StatisticsController.getRequests.getVegetarianMeal(username);
         try{
-            StatisticsController.profile = UserRequests.getProfileConnection(username);
+//            StatisticsController.profile = UserRequests.getProfileConnection(username);
             StatisticsController.statistics = StatisticsController.getRequests.getStatsConnection(username);
             System.out.println("StatisticsController.statistics at init() is: " + StatisticsController.statistics);
             System.out.println(StatisticsController.statistics.getClass() + " is the Class");
@@ -75,49 +119,6 @@ public class MyScore extends AppCompatActivity
             System.out.println("IO Error occured at init()");
         }
         return StatisticsController.statistics;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_my_score);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("My Score");
-        setSupportActionBar(toolbar);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        TextView score = (TextView) findViewById(R.id.my_Score);
-
-        Intent intent = getIntent();
-        if (intent != null) {
-            String username = intent.getStringExtra("username");
-            ArrayList array = new ArrayList(1);
-            array.add(0, username);
-            AsyncTaskConnection taskConnection = new AsyncTaskConnection();
-            taskConnection.execute(array);
-//            System.out.println("Retrieved username from StatisticsController; " + stats.getUsername());
-//        System.out.println("Initialised username:" + username);
-        } else {
-            System.out.println("Intent passed to myScore.java is null");
-        }
-
-//        StatisticsController.setUserName(username);
-//        StatisticsController.statistics = StatisticsController.getRequests.getStatistics(username);
-//        StatisticsController.vegMeal = StatisticsController.getRequests.getVegetarianMeal(username);
-
-//        StatisticsController.initialise();
-        //TODO Get score of user
-//        score.setText(user.getScore());
     }
 
     public void setStats(){
@@ -219,13 +220,13 @@ public class MyScore extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_my_score) {
-            Intent intent = new Intent(this, MyScore.class);
-            startActivity(intent);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_reduced_emssion) {
             Intent intent = new Intent(this, ReducedEmission.class);
+            intent.putExtra("username", stats.getUsername());
+            System.out.println("username sent in intent from myScore.java is: " + stats.getUsername());
             startActivity(intent);
-        } else if (id == R.id.nav_my_basecase) {
-
         } else if (id == R.id.nav_logout){
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
