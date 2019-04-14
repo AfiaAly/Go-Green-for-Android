@@ -47,12 +47,11 @@
         android:layout_marginStart="205dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="206dp"
-        android:contentDescription="@string/logo_or_image_to_display_during_login_signup"
+        android:contentDescription="Go Green Icon"
+        android:src="@drawable/go_green_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:color/holo_green_dark" />
-
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/messageLogin"
         android:layout_width="wrap_content"

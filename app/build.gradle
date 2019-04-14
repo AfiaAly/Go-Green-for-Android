@@ -58,8 +58,8 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.5.3'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.5.3'
-
-
+    implementation 'pl.pawelkleczkowski.customgauge:CustomGauge:1.0.3'
+    implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
 //    implementation (group: 'org.springframework', name: 'spring-web', version: '5.1.5.RELEASE'){
 //        exclude module : ''
 //    }

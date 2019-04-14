@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     array.add(1, password);
                     taskConnection.execute(array);
                 } catch (Exception e) {
+                    messageLogin = (TextView) findViewById(R.id.messageLogin);
                     messageLogin.setText("IO Error occured");
                 }
                 ;

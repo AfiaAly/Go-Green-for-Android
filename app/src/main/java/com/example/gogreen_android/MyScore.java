@@ -1,6 +1,7 @@
 package com.example.gogreen_android;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -20,11 +21,21 @@ import com.example.gogreen_android.requests.UserRequests;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import lecho.lib.hellocharts.model.PieChartData;
+import lecho.lib.hellocharts.model.SliceValue;
+import lecho.lib.hellocharts.view.PieChartView;
+import pl.pawelkleczkowski.customgauge.CustomGauge;
 
 public class MyScore extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Statistics stats;
+    int Score;
+    CustomGauge veggieMealGauge;
+    CustomGauge travelGauge;
+    PieChartView travelChart;
 
     class AsyncTaskConnection extends AsyncTask<ArrayList, Statistics, Statistics> {
 
@@ -42,7 +53,7 @@ public class MyScore extends AppCompatActivity
         protected void onPostExecute(Statistics statistics) {
             stats = statistics;
             System.out.println("Retrieved username from StatisticsController; " + stats.getUsername());
-            getStats();
+            setStats();
         }
     }
     private Statistics init(String username){
@@ -85,7 +96,7 @@ public class MyScore extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        TextView score = (TextView) findViewById(R.id.textView3);
+        TextView score = (TextView) findViewById(R.id.my_Score);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -109,8 +120,64 @@ public class MyScore extends AppCompatActivity
 //        score.setText(user.getScore());
     }
 
-    public void getStats(){
-        System.out.println("Retrieved score from StatisticsController; " + stats.getScore());
+    public void setStats(){
+        setScore();
+        setGauge1();
+        setGauge2();
+    }
+
+    public void setScore(){
+        Score = stats.getScore();
+        System.out.println("Retrieved score from StatisticsController; " + Score);
+        TextView score = findViewById(R.id.my_Score);
+        score.setText(Integer.toString(Score));
+    }
+
+    public void setGauge1(){
+        veggieMealGauge = findViewById(R.id.veg_meals_eaten);
+        int mealsEaten = stats.getNumberOfVegetarianMeals();
+
+        int g1StartValue = (mealsEaten - (mealsEaten%50));
+        System.out.println("g1StartValue is: " + g1StartValue);
+        veggieMealGauge.setStartValue(g1StartValue);
+
+        int g1EndValue = ((mealsEaten+50) - (mealsEaten%50));
+        System.out.println("g1EndValue is: " + g1EndValue);
+        veggieMealGauge.setEndValue(g1EndValue);
+
+        int g1Value = (mealsEaten % 50);
+        System.out.println("g1Value is: " + g1Value);
+        veggieMealGauge.setValue(g1Value);
+
+        TextView idMealsEaten = findViewById(R.id.nbVeggieMeals);
+        idMealsEaten.setText(Integer.toString(mealsEaten));
+        TextView outOfMod50 = findViewById(R.id.outOfMod50);
+        outOfMod50.setText(Integer.toString(g1EndValue));
+        TextView inOfMod50 = findViewById(R.id.inOfMod50);
+        inOfMod50.setText(Integer.toString(g1StartValue));
+    }
+
+    public void setGauge2(){
+        List<SliceValue> pieData = new ArrayList<>();
+        int byBike = stats.getReducedEmissionByTravelingByBike();
+        int byPT = stats.getReducedEmissionByTravelingByPublicTransport();
+        System.out.println(byBike + "||" + byPT);
+
+        pieData.add(new SliceValue(byBike, Color.rgb(38,102,125)).setLabel("By Bike: " + byBike));
+        pieData.add(new SliceValue(byPT, Color.rgb(178,28,26)).setLabel("By PT: " + byPT));
+
+//        pieData.add(new SliceValue(50, Color.BLUE));
+//        pieData.add(new SliceValue(25, Color.RED));
+//        pieData.add(new SliceValue(100, Color.MAGENTA));
+
+
+        PieChartData chartData = new PieChartData(pieData);
+        chartData.setHasCenterCircle(true);
+        chartData.setHasLabels(true).setValueLabelTextSize(9);
+
+        travelChart = findViewById(R.id.travelChart);
+        travelChart.setPieChartData(chartData);
+
     }
 
     @Override
