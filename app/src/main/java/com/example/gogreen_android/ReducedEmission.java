@@ -77,15 +77,9 @@ public class ReducedEmission extends AppCompatActivity
 
     private Statistics init(String username){
         StatisticsController.setUserName(username);
-//        ProfileController.setUserName(username);
-//        StatisticsController.postRequests = new PostRequests();
         StatisticsController.getRequests = new GetRequests();
-//        StatisticsController.transport = new Transport(username, 0, 0);
-//        StatisticsController.lifestyle = new Lifestyle(username, false, false,
-//                0);
-//        StatisticsController.vegetarianMeal = StatisticsController.getRequests.getVegetarianMeal(username);
+
         try{
-//            StatisticsController.profile = UserRequests.getProfileConnection(username);
             System.out.println("Username at init() at ReducedEmission.java is: " + username);
             StatisticsController.statistics = StatisticsController.getRequests.getStatsConnection(username);
             System.out.println("StatisticsController.statistics at init() is: " + StatisticsController.statistics);
@@ -137,6 +131,8 @@ public class ReducedEmission extends AppCompatActivity
 
         if (id == R.id.nav_my_score) {
             Intent intent = new Intent(this, MyScore.class);
+            intent.putExtra("username", stats.getUsername());
+            System.out.println("username sent in intent from reducedEmission.java is: " + stats.getUsername());
             startActivity(intent);
         } else if (id == R.id.nav_reduced_emssion) {
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

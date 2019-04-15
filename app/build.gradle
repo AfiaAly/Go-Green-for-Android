@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.vanniktech.android.junit.jacoco'
+//apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 28
@@ -12,6 +14,7 @@ android {
     }
     buildTypes {
         release {
+            testCoverageEnabled true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -26,6 +29,9 @@ android {
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/ASL2.0'
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -37,37 +43,15 @@ dependencies {
     testImplementation 'junit:junit:4.12'//done
     androidTestImplementation 'com.android.support.test:runner:1.0.2'//done
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'//done
-//    implementation group: 'commons-codec', name: 'commons-codec', version: '1.9'
-//    implementation group: 'com.jayway.jsonpath', name: 'json-path', version: '2.0.0' //(Error: Program type already present: org.objectweb.asm.AnnotationWriter)
-//    implementation group: 'org.mongodb', name: 'mongo-java-driver', version: '3.10.1'
-
-//    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
-//    implementation group: 'com.jfoenix', name: 'jfoenix', version: '8.0.8'
-//    implementation group: 'de.jensd', name: 'fontawesomefx', version: '8.9'
-//    implementation(group: 'eu.hansolo', name: 'Medusa', version: '5.7')
-//    implementation group: 'org.json', name: 'json', version: '20180813'
-//    testImplementation group: 'org.junit.vintage', name: 'junit-vintage-engine', version: '5.4.0'
-//    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.2'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.2'
     compileOnly 'org.projectlombok:lombok:1.18.6'
     annotationProcessor 'org.projectlombok:lombok:1.18.6'
-//    implementation 'com.android.support:recyclerview-v7:28.0.0'
-//    implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
-
-//    Spring framework dependencies
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.0.1'
     implementation 'org.springframework.android:spring-android-rest-template:2.0.0.M3'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.5.3'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.5.3'
     implementation 'pl.pawelkleczkowski.customgauge:CustomGauge:1.0.3'
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
-//    implementation (group: 'org.springframework', name: 'spring-web', version: '5.1.5.RELEASE'){
-//        exclude module : ''
-//    }
 
-//    implementation (group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.1.3.RELEASE'){
-//        exclude module : 'spring-boot-starter-logging'
-//    }
-//    implementation (group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.3.RELEASE') {
-//        exclude module : 'spring-boot-starter-logging'
-//    }
 }

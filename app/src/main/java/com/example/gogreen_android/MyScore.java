@@ -60,25 +60,15 @@ public class MyScore extends AppCompatActivity
         Intent intent = getIntent();
         if (intent != null) {
             String username = intent.getStringExtra("username");
+            System.out.println("Username retrieved from intent at myScore is: " + username);
             ArrayList array = new ArrayList(1);
             array.add(0, username);
             AsyncTaskConnection taskConnection = new AsyncTaskConnection();
             taskConnection.execute(array);
-            
-//            navUsername.setText(username.toString());
-//            System.out.println("Retrieved username from StatisticsController; " + stats.getUsername());
-//        System.out.println("Initialised username:" + username);
+
         } else {
             System.out.println("Intent passed to myScore.java is null");
         }
-
-//        StatisticsController.setUserName(username);
-//        StatisticsController.statistics = StatisticsController.getRequests.getStatistics(username);
-//        StatisticsController.vegMeal = StatisticsController.getRequests.getVegetarianMeal(username);
-
-//        StatisticsController.initialise();
-//        score.setText(user.getScore());
-
     }
 
     class AsyncTaskConnection extends AsyncTask<ArrayList, Statistics, Statistics> {
@@ -102,15 +92,9 @@ public class MyScore extends AppCompatActivity
     }
     private Statistics init(String username){
         StatisticsController.setUserName(username);
-//        ProfileController.setUserName(username);
-//        StatisticsController.postRequests = new PostRequests();
         StatisticsController.getRequests = new GetRequests();
-//        StatisticsController.transport = new Transport(username, 0, 0);
-//        StatisticsController.lifestyle = new Lifestyle(username, false, false,
-//                0);
-//        StatisticsController.vegetarianMeal = StatisticsController.getRequests.getVegetarianMeal(username);
+
         try{
-//            StatisticsController.profile = UserRequests.getProfileConnection(username);
             StatisticsController.statistics = StatisticsController.getRequests.getStatsConnection(username);
             System.out.println("StatisticsController.statistics at init() is: " + StatisticsController.statistics);
             System.out.println(StatisticsController.statistics.getClass() + " is the Class");
@@ -166,10 +150,6 @@ public class MyScore extends AppCompatActivity
 
         pieData.add(new SliceValue(byBike, Color.rgb(38,102,125)).setLabel("By Bike: " + byBike));
         pieData.add(new SliceValue(byPT, Color.rgb(178,28,26)).setLabel("By PT: " + byPT));
-
-//        pieData.add(new SliceValue(50, Color.BLUE));
-//        pieData.add(new SliceValue(25, Color.RED));
-//        pieData.add(new SliceValue(100, Color.MAGENTA));
 
 
         PieChartData chartData = new PieChartData(pieData);

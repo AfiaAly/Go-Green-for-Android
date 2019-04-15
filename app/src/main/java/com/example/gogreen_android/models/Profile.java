@@ -23,8 +23,4 @@ public class Profile {
     @Getter @Setter private int roomTemperatureLoweredBy;
     @Getter @Setter private int greenEnergy;
     @Getter @Setter private String userId;
-
-//    public void setUsername(String username) {
-//        this.username = username;
-//    }
 }

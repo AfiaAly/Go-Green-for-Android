@@ -6,7 +6,6 @@
     <string name="login">Login</string>
     <string name="logo_or_image_to_display_during_login_signup">Logo or image to display during login/signup</string>
     <string name="sign_up"><u>Sign up</u></string>
-    <!--<string name="username">Username</string>-->
     <string name="title_activity_my__score">My_Score</string>
     <string name="title_activity_my_score">MyScore</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -27,15 +26,12 @@
     <string name="kg_co2">kg CO2</string>
     <string name="app_name_nav">Go Green for Android</string>
     <string name="user_name">username</string>
-    <!--<string name="my_score">My Score</string>-->
     <string name="reduced_emssion">Reduced Emssion</string>
     <string name="my_basecase">My Basecase</string>
     <string name="help">Help</string>
     <string name="settings">Settings</string>
     <string name="log_out">Log out</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="_inOfMod50">0</string>
-    <!--<string name="wrongCreds">Your username or password is incorrect</string>-->
 </resources>

@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.gogreen_android.controllers.LoginController;
 import com.example.gogreen_android.controllers.StatisticsController;
 import com.example.gogreen_android.models.User;
 import com.example.gogreen_android.requests.UserRequests;
@@ -51,9 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                call myScore activity. For testing.
-//                Intent intent = new Intent(v.getContext(), MyScore.class);
-//                startActivity(intent);
+
                 String username = edtUsername.getText().toString();
                 System.out.println(username);
                 String password = edtPassword.getText().toString();
@@ -62,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 //call login method
                 try {
                     AsyncTaskConnection taskConnection = new AsyncTaskConnection();
-//                    User user = new User(username, password, false);
                     ArrayList array = new ArrayList(2);
                     array.add(0, username);
                     array.add(1, password);
@@ -76,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     class AsyncTaskConnection extends AsyncTask<ArrayList, Void, User> {
-
-//        User user;
 
         @Override
         protected void onPreExecute() {
@@ -105,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
             System.out.println(user + "at doInBackground() in MainActivity.java");
             try {
                 user = login(username, password);
-//                System.out.println(user);
                 return user;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -126,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(User user){
             super.onPostExecute(user);
-//            System.out.println(user.toString());
             if (user != null) {
                 if (user.isSuccess()) {
                     messageLogin.setVisibility(View.VISIBLE);
@@ -157,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Calls Login method, which has actual connection code
         try {
-            LoginController.setUserName(username);
             user = (User) UserRequests.loginRequestConnection(username, password); //...............................................
             System.out.println(user + "at login()");
             return user;

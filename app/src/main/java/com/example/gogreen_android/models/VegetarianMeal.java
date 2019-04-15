@@ -16,9 +16,4 @@ public class VegetarianMeal {
 
     // This value has already been set since it will reduce the emissions by a be constant
     @Getter @Setter private int reducedEmission = 5;
-
-//    Not needed
-//    public void incrementNumberOfMealsByOne() {
-//        this.numberOfMeals += 1;
-//    }
 }

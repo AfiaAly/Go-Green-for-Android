@@ -12,9 +12,7 @@ import java.util.ArrayList;
 
 public class StatisticsController {
 
-//  public static PostRequests postRequests;
-//  public static Lifestyle lifestyle;
-//  public static Transport transport;
+
     public static String userName;
     public static GetRequests getRequests;
     public static VegetarianMeal vegMeal;
@@ -44,27 +42,11 @@ public class StatisticsController {
         }
     }
 
-    public void getModel(Object model){
-        if (model instanceof Statistics){
-            //Call Async task
-            AsyncTaskConnection taskConnection = new AsyncTaskConnection();
-            ArrayList array = new ArrayList(1);
-            array.add(0, userName);
-            taskConnection.execute(array);
-            System.out.println("From getModel(): " + statistics);
-        } else if (model instanceof  VegetarianMeal) {
-            vegMeal = getRequests.getVegetarianMeal(userName);
-        } else {
-            return;
-        }
-    }
-
     public static void setUserName(String user){
         userName = user;
     }
 
     public void updateStatistics(){
-        getModel(statistics);
         final int normalCar = statistics.getUsualTravelDistanceByCar();
         final int byBike = statistics.getTotalTravelDistanceByBike();
         final int byPt = statistics.getTotalTravelDistanceByPublicTransport();
