@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.vanniktech.android.junit.jacoco'
+//apply plugin: 'com.vanniktech.android.junit.jacoco'
 //apply plugin: 'jacoco'
 
 android {
